@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Assignment_ASP.NET_MVC2.Models.PersonModel>
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Id)</th>
+            <th>@Html.DisplayNameFor(model => model.FirstName)</th>
+            <th>@Html.DisplayNameFor(model => model.LastName)</th>
+            <th>@Html.DisplayNameFor(model => model.Gender)</th>
+            <th>@Html.DisplayNameFor(model => model.DateOfBirth)</th>
+            <th>@Html.DisplayNameFor(model => model.PhoneNumber)</th>
+            <th>@Html.DisplayNameFor(model => model.BirthPlace)</th>
+
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var person in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelPerson => person.Id)</td>
+                <td>@Html.DisplayFor(modelPerson => person.FirstName)</td>
+                <td>@Html.DisplayFor(modelPerson => person.LastName)</td>
+                <td>@Html.DisplayFor(modelPerson => person.Gender)</td>
+                <td>@Html.DisplayFor(modelPerson => person.DateOfBirth)</td>
+                <td>@Html.DisplayFor(modelPerson => person.PhoneNumber)</td>
+                <td>@Html.DisplayFor(modelPerson => person.BirthPlace)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@person.Id" class="btn btn-success">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@person.Id" class="btn btn-danger btn-del">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="">
+    <a asp-action="Add" class="btn btn-info">Add</a>
+</div>
+
+@section Scripts 
+{
+    <script>
+        var delBtn = $(".btn-del");
+        delBtn.on('click',function(event){
+            event.preventDefault();
+            opt = confirm("Do you want to delete this user?");
+            if(opt==true){
+                console.log($(this).attr("href"));
+                $.ajax({
+                    url: $(this).attr("href"),
+                    type: "POST"
+                }).done(function(){
+                    window.location.reload();
+                });
+            }
+        });
+    </script>
+}
